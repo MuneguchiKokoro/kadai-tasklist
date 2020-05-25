@@ -6,11 +6,11 @@ class TasksController < ApplicationController
   
   def index
     # @tasks = Task.order(created_at: :desc).page(params[:page]).per(3)
-    if logged_in?
+  
       #@user = current_user
       @task = current_user.tasks.build  
       @tasks = current_user.tasks.order('created_at DESC').page(params[:page])
-    end
+    
   end
 
   def show
@@ -31,18 +31,15 @@ class TasksController < ApplicationController
       redirect_to @task
     else
       flash.now[:danger] = 'タスク が登録できませんでした。もう一度お願いします。'
-      render 'toppages/index'
-      #render :new
+      render :new
     end
   end
  
   def edit
-    correct_user
      #set_task
   end
 
   def update
-    correct_user
      #set_task
      
      if @task.update(task_params)
